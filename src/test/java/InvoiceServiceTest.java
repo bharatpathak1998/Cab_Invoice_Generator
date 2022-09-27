@@ -1,10 +1,17 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class InvoiceServiceTest {
+    InvoiceService invoiceService = null;
+
+    @BeforeEach
+    void setUp() {
+        invoiceService = new InvoiceService();
+    }
+
     @Test
     public void givenDistanceAndTime_ShouldReturnTotalFare() {
-        InvoiceService invoiceService = new InvoiceService();
         double distance = 8.0;
         int time = 12;
         double fare = invoiceService.calculateFare(distance, time);
@@ -13,7 +20,6 @@ public class InvoiceServiceTest {
 
     @Test
     public void givenLessDistanceOrTime_ShouldReturnMinFare() {
-        InvoiceService invoiceService = new InvoiceService();
         double distance = 0.2;
         int time = 2;
         double totalFare = invoiceService.calculateFare(distance, time);
@@ -21,13 +27,12 @@ public class InvoiceServiceTest {
     }
 
     @Test
-    public void givenMultipleRides_ShouldReturnTotalFare() {
-        InvoiceService invoiceService = new InvoiceService();
-        Ride[] rides = {
-                new Ride(8.0, 12),
+    public void givenMultipleRides_ShouldReturnInvoiceSummary() {
+        Ride[] rides = {new Ride(8.0, 12),
                 new Ride(0.2, 2)
         };
-        double fare = invoiceService.calculateFare(rides);
-        Assertions.assertEquals(97, fare, 0.0);
+        InvoiceSummary summary = invoiceService.calculateFare(rides);
+        InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 97.0);
+        Assertions.assertEquals(expectedInvoiceSummary, summary);
     }
 }
