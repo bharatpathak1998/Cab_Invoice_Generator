@@ -6,4 +6,11 @@ public class Ride {
         this.distance = distance;
         this.time = time;
     }
+    @Override
+    public String toString() {
+        return "Ride{" +
+                "time=" + time +
+                ", distance=" + distance +
+                '}';
+    }
 }
